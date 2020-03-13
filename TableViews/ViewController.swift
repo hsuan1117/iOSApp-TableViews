@@ -11,15 +11,20 @@ import UIKit
 class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
     
     @IBOutlet weak var UsingTableView: UITableView!
-    var data = ["A","B","C","D"]
+    var data : [String : [String]] = [
+        "Silly Man":["person1","He is a man"],
+        "Emperor":["person2","He is strange"]
+    ]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UsingTableView.dequeueReusableCell(withIdentifier: "myCell") as! MyCustomeCell
-        //cell?.cellTitle.text = "Ha"
-        cell.cellTitle?.text = data[indexPath.row]
+        
+        cell.cellTitle?.text = Array(data.keys)[indexPath.row]
+        cell.cellContent?.text = data[Array(data.keys)[indexPath.row]]![1]
+        cell.cellImage?.image = UIImage(named: data[Array(data.keys)[indexPath.row]]![0])
         return cell
     }
     
