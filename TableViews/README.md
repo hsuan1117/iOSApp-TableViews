@@ -3,7 +3,7 @@
 
 ## 注意
 記得導入cell要加入
-```
+```Swift
 as! MyCustomeCell
 ```
 
