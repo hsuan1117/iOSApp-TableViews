@@ -34,10 +34,14 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let index   = UsingTableView.indexPathForSelectedRow
-        let ToWhere = segue.destination as! DetailsView
-        print(index)
-        ToWhere.TitleText.text = Array(data.keys)[index!.row]
+        
+        if let indexPath = UsingTableView.indexPathForSelectedRow {
+            let ToWhere = segue.destination as! DetailsView
+            //print(UsingTableView.indexPathForSelectedRow?.item)
+            //ToWhere.TitleText.text = "Array(data.keys)[0]"
+            ToWhere.gotTitle = Array(data.keys)[UsingTableView.indexPathForSelectedRow!.row]
+        }
+        
         
     }
 

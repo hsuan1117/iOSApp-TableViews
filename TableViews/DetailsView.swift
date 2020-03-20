@@ -9,13 +9,13 @@
 import UIKit
 
 class DetailsView: UIViewController {
-    
+    var gotTitle = ""
     
     
     @IBOutlet weak var TitleText: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        TitleText.text = gotTitle
         // Do any additional setup after loading the view.
     }
     

@@ -131,7 +131,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="jQf-IA-qmZ"/>
                     <connections>
-                        <outlet property="TitleText" destination="6Mw-1r-YIF" id="aoQ-eU-3hK"/>
+                        <outlet property="TitleText" destination="6Mw-1r-YIF" id="Lp3-uM-wFM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gEF-fn-hYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
