@@ -45,6 +45,11 @@
                                                                 <constraint firstAttribute="width" constant="60" id="3sM-i3-FPK"/>
                                                                 <constraint firstAttribute="height" constant="60" id="WkV-fB-Eda"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="30"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kpx-I7-2fC">
                                                             <rect key="frame" x="65" y="0.0" width="61.5" height="60"/>
@@ -79,6 +84,7 @@
                                             <outlet property="cellContent" destination="7AP-i9-qDV" id="EPD-rc-ykf"/>
                                             <outlet property="cellImage" destination="Unp-2B-Je4" id="i2Z-ki-jvm"/>
                                             <outlet property="cellTitle" destination="CXV-Wo-nqo" id="UDg-kx-1Mg"/>
+                                            <segue destination="lRS-ZQ-Kpf" kind="show" id="wKq-Zg-XhL"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -103,6 +109,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="138.61607142857142"/>
+        </scene>
+        <!--Details View-->
+        <scene sceneID="YyZ-j8-k9s">
+            <objects>
+                <viewController id="lRS-ZQ-Kpf" customClass="DetailsView" customModule="TableViews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wth-gn-SWO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Mw-1r-YIF">
+                                <rect key="frame" x="20" y="58" width="196" height="73"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="MD5-Dy-o2b"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="jQf-IA-qmZ"/>
+                    <connections>
+                        <outlet property="TitleText" destination="6Mw-1r-YIF" id="aoQ-eU-3hK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gEF-fn-hYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="912" y="139"/>
         </scene>
     </scenes>
 </document>

@@ -9,7 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
-    
     @IBOutlet weak var UsingTableView: UITableView!
     var data : [String : [String]] = [
         "Silly Man":["person1","He is a man"],
@@ -28,13 +27,19 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
         return cell
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         UsingTableView.delegate = self
         UsingTableView.dataSource = self
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let index   = UsingTableView.indexPathForSelectedRow
+        let ToWhere = segue.destination as! DetailsView
+        print(index)
+        ToWhere.TitleText.text = Array(data.keys)[index!.row]
+        
+    }
 
 }
 
