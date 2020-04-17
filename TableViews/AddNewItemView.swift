@@ -7,16 +7,26 @@
 //
 
 import UIKit
-
+protocol DataDelegate {
+    func addItem(name:String,imageName:String,description:String)
+}
 class AddNewItemView: UIViewController {
-
+    var toSendData : DataDelegate!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
     
 
+    @IBOutlet weak var lb_description: UITextField!
+    @IBOutlet weak var lb_image: UITextField!
+    @IBOutlet weak var lb_name: UITextField!
+    @IBAction func BtnClicked(_ sender: Any) {
+        toSendData.addItem(name: lb_name.text!, imageName: lb_image.text!, description: lb_description.text!)
+        navigationController?.popViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
