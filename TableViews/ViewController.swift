@@ -14,13 +14,13 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
     @IBOutlet weak var UsingTableView: UITableView!
     
     var data : [String : [String]] = [
-        "Silly Man":["person1","He is a man"],
+        "Cotpear":["person1","https://www.cotpear.com"],
         "Hsuan":["person2","He is strange"]
     ]
-    func addItem(name: String, imageName: String, description: String) {
+    func addItem(name: String, imageName: String, url: String) {
         var x : [String] = []
         x.append(imageName)
-        x.append(description)
+        x.append(url)
         data[name] = x
         UsingTableView.reloadData()
     }
@@ -34,6 +34,20 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
         cell.cellTitle?.text = Array(data.keys)[indexPath.row]
         cell.cellContent?.text = data[Array(data.keys)[indexPath.row]]![1]
         cell.cellImage?.image = UIImage(named: data[Array(data.keys)[indexPath.row]]![0])
+        func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+            URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+        }
+        func downloadImage(from url: URL) {
+            print("Download Started")
+            getData(from: url) { data, response, error in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async() {
+                    cell.cellImage.image = UIImage(data: data)
+                }
+            }
+        }
+        let url = URL(string: data[Array(data.keys)[indexPath.row]]![0])!
+        downloadImage(from: url)
         return cell
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -66,7 +80,10 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
                 let ToWhere = segue.destination as! DetailsView
                 //print(UsingTableView.indexPathForSelectedRow?.item)
                 //ToWhere.TitleText.text = "Array(data.keys)[0]"
+                print(data[Array(data.keys)[indexPath.row]]!)
                 ToWhere.gotTitle = Array(data.keys)[indexPath.row]
+                ToWhere.gotURL = data[Array(data.keys)[indexPath.row]]![1]
+                ToWhere.gotImage = data[Array(data.keys)[indexPath.row]]![0]
             }
         }
     }

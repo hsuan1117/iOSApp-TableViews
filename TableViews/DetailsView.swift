@@ -7,27 +7,19 @@
 //
 
 import UIKit
-
+import WebKit
 class DetailsView: UIViewController {
     var gotTitle = ""
+    var gotURL = ""
+    var gotImage = ""
     
-    
+    @IBOutlet weak var WV: WKWebView!
     @IBOutlet weak var TitleText: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         TitleText.text = gotTitle
-        // Do any additional setup after loading the view.
+        WV.load(URLRequest(url: URL(string: gotURL)!))
+        
+        
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
