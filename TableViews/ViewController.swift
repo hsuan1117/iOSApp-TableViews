@@ -8,46 +8,36 @@
 
 import UIKit
 
-class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate ,DataDelegate{
-    
-    
+class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate ,DataDelegate,UISearchBarDelegate{
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            self.filteredData = data
+        }else{
+            self.filteredData = self.data.filter({
+                return $0.title.lowercased().contains(searchText.lowercased())
+            })
+            UsingTableView.reloadData()
+        }
+    }
     @IBOutlet weak var UsingTableView: UITableView!
     
-    var data : [String : [String]] = [
-        "Cotpear":["person1","https://www.cotpear.com"],
-        "Hsuan":["person2","He is strange"]
-    ]
-    func addItem(name: String, imageName: String, url: String) {
-        var x : [String] = []
-        x.append(imageName)
-        x.append(url)
-        data[name] = x
+    var data : [Introducer] = []
+    var filteredData : [Introducer] = []
+    func addItem(title: String, image: UIImage, url: String) {
+        data.append(Introducer(title: title, image: image, url: url))
+        filteredData = data
         UsingTableView.reloadData()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return filteredData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UsingTableView.dequeueReusableCell(withIdentifier: "myCell") as! MyCustomeCell
-        
-        cell.cellTitle?.text = Array(data.keys)[indexPath.row]
-        cell.cellContent?.text = data[Array(data.keys)[indexPath.row]]![1]
-        cell.cellImage?.image = UIImage(named: data[Array(data.keys)[indexPath.row]]![0])
-        func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-            URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-        }
-        func downloadImage(from url: URL) {
-            print("Download Started")
-            getData(from: url) { data, response, error in
-                guard let data = data, error == nil else { return }
-                DispatchQueue.main.async() {
-                    cell.cellImage.image = UIImage(data: data)
-                }
-            }
-        }
-        let url = URL(string: data[Array(data.keys)[indexPath.row]]![0])!
-        downloadImage(from: url)
+        cell.cellTitle?.text   = filteredData[indexPath.row].title
+        cell.cellImage?.image  = filteredData[indexPath.row].image
+        cell.cellContent?.text = filteredData[indexPath.row].url
         return cell
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -59,14 +49,23 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
         
         let action = UIContextualAction(style: .destructive, title: "刪除") {
             (action,view,handler) in
-            self.data.removeValue(forKey: Array(self.data.keys)[at])
+            self.data.remove(at: at)
+            self.filteredData = self.data
             self.UsingTableView.reloadData()
         }
         action.backgroundColor = .red
         return action
     }
+    
+    @IBOutlet weak var SearchController: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        data.append(Introducer(title: "Hsuan", image: UIImage(named: "person1")!, url: "https://air.hsuan.app"))
+        data.append(Introducer(title: "Google" , image: UIImage(named: "person1")!, url: "https://google.com.tw"))
+        filteredData = data
+        SearchController.delegate = self
         UsingTableView.delegate = self
         UsingTableView.dataSource = self
     }
@@ -78,15 +77,13 @@ class ViewController: UIViewController ,UITableViewDataSource,UITableViewDelegat
         }else{
             if let indexPath = UsingTableView.indexPathForSelectedRow {
                 let ToWhere = segue.destination as! DetailsView
-                //print(UsingTableView.indexPathForSelectedRow?.item)
-                //ToWhere.TitleText.text = "Array(data.keys)[0]"
-                print(data[Array(data.keys)[indexPath.row]]!)
-                ToWhere.gotTitle = Array(data.keys)[indexPath.row]
-                ToWhere.gotURL = data[Array(data.keys)[indexPath.row]]![1]
-                ToWhere.gotImage = data[Array(data.keys)[indexPath.row]]![0]
+                
+                ToWhere.gotTitle = data[indexPath.row].title
+                ToWhere.gotURL   = data[indexPath.row].url
+                ToWhere.gotImage = data[indexPath.row].image
             }
         }
     }
-
+    
 }
 

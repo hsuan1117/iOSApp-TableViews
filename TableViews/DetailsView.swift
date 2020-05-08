@@ -9,17 +9,18 @@
 import UIKit
 import WebKit
 class DetailsView: UIViewController {
-    var gotTitle = ""
-    var gotURL = ""
-    var gotImage = ""
+    
+    //將從前一個視圖中取得的資料
+    var gotTitle : String  = ""
+    var gotURL   : String  = ""
+    var gotImage : UIImage = UIImage()
     
     @IBOutlet weak var WV: WKWebView!
     @IBOutlet weak var TitleText: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         TitleText.text = gotTitle
         WV.load(URLRequest(url: URL(string: gotURL)!))
-        
-        
     }
 }
